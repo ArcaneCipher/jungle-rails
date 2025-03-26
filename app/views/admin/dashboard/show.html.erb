@@ -1,2 +1,30 @@
-<h1>Admin::Dashboard#show</h1>
-<p>Find me in app/views/admin/dashboard/show.html.erb</p>
+<section class="admin-dashboard container mt-5">
+
+  <header class="page-header mb-4">
+    <h1>Admin Dashboard</h1>
+    <p class="test-muted">Store Overview</p>
+  </header>
+
+  <div class="row g-4">
+    <div class="col-md-6">
+      <div class="card shadow-sm h-100">
+        <div class="card-body text-center">
+          <h5 class="card-title">Total Products</h5>
+          <p class="display-4"><%= @product_count %></p>
+          <%= link_to 'View All Products', admin_products_path, class: 'btn btn-primary' %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card shadow-sm h-100">
+        <div class="card-body text-center">
+          <h5 class="card-title">Total Categories</h5>
+          <p class="display-4"><%= @category_count %></p>
+          <!-- You could link to admin_categories_path if implemented -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
