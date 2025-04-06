@@ -21,7 +21,7 @@
         <div class="card-body text-center">
           <h5 class="card-title">Total Categories</h5>
           <p class="display-4"><%= @category_count %></p>
-          <!-- You could link to admin_categories_path if implemented -->
+          <%= link_to 'Categories', admin_categories_path, class: 'btn btn-primary' %>
         </div>
       </div>
     </div>
