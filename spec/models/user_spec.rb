@@ -41,5 +41,44 @@ RSpec.describe User, type: :model do
       subject.password_confirmation = "differentpassword"
       expect(subject).to_not be_valid
     end
+
+    it "is not valid if the password is too short" do
+      subject.password = "123"
+      subject.password_confirmation = "123"
+      expect(subject).to_not be_valid
+      expect(subject.errors.full_messages).to include("Password is too short (minimum is 6 characters)")
+    end
+  end
+
+  describe ".authenticate_with_credentials" do
+    before do
+      @user = User.create(
+        first_name: "Test",
+        last_name: "User",
+        email: "user@example.com",
+        password: "secure123",
+        password_confirmation: "secure123"
+      )
+    end
+
+    it "authenticates with correct credentials" do
+      result = User.authenticate_with_credentials("user@example.com", "secure123")
+      expect(result).to eq(@user)
+    end
+
+    it "authenticates even if email has leading/trailing spaces" do
+      result = User.authenticate_with_credentials("  user@example.com  ", "secure123")
+      expect(result).to eq(@user)
+    end
+
+    it "authenticates even if email has different casing" do
+      result = User.authenticate_with_credentials("User@Example.COM", "secure123")
+      expect(result).to eq(@user)
+    end
+
+    it "returns nil if password is incorrect" do
+      result = User.authenticate_with_credentials("user@example.com", "wrongpass")
+      expect(result).to be_nil
+    end
   end
 end
